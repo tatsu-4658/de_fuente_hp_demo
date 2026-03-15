@@ -14,11 +14,16 @@ import {
 } from "@/lib/db";
 import { readJsonFile } from "@/lib/data";
 
-export async function POST() {
-  if (!(await isAuthenticated())) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+// GET: ブラウザから直接アクセスしてセットアップ可能（初回のみ）
+export async function GET() {
+  return runSetup();
+}
 
+export async function POST() {
+  return runSetup();
+}
+
+async function runSetup() {
   if (!isDbAvailable()) {
     return NextResponse.json({ error: "DATABASE_URL is not configured" }, { status: 500 });
   }

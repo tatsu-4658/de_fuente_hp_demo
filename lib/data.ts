@@ -23,30 +23,40 @@ export async function writeJsonFile<T>(filename: string, data: T): Promise<void>
   await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
 }
 
-// Unified data access functions (DB with JSON fallback)
+// Unified data access functions (DB with JSON fallback on error)
 
 export async function getMenuData() {
-  if (isDbAvailable()) return dbGetMenu();
+  if (isDbAvailable()) {
+    try { return await dbGetMenu(); } catch { /* fall through to JSON */ }
+  }
   return readJsonFile<Awaited<ReturnType<typeof dbGetMenu>>>("menu.json");
 }
 
 export async function getWeeklyMenuData() {
-  if (isDbAvailable()) return dbGetWeeklyMenu();
+  if (isDbAvailable()) {
+    try { return await dbGetWeeklyMenu(); } catch { /* fall through to JSON */ }
+  }
   return readJsonFile<Awaited<ReturnType<typeof dbGetWeeklyMenu>>>("weekly-menu.json");
 }
 
 export async function getCalendarData() {
-  if (isDbAvailable()) return dbGetCalendar();
+  if (isDbAvailable()) {
+    try { return await dbGetCalendar(); } catch { /* fall through to JSON */ }
+  }
   return readJsonFile<Awaited<ReturnType<typeof dbGetCalendar>>>("calendar.json");
 }
 
 export async function getNewsData() {
-  if (isDbAvailable()) return dbGetNews();
+  if (isDbAvailable()) {
+    try { return await dbGetNews(); } catch { /* fall through to JSON */ }
+  }
   return readJsonFile<Awaited<ReturnType<typeof dbGetNews>>>("news.json");
 }
 
 export async function getShopInfoData() {
-  if (isDbAvailable()) return dbGetShopInfo();
+  if (isDbAvailable()) {
+    try { return await dbGetShopInfo(); } catch { /* fall through to JSON */ }
+  }
   return readJsonFile<Record<string, unknown>>("shop-info.json");
 }
 
