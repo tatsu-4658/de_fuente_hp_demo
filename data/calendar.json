@@ -1,0 +1,11 @@
+{
+  "businessHours": {
+    "open": "10:00",
+    "close": "19:00"
+  },
+  "regularHolidays": [0, 6],
+  "overrides": {
+    "2026-03-20": "closed",
+    "2026-03-21": "open"
+  }
+}

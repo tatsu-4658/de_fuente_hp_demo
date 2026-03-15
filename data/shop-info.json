@@ -1,0 +1,21 @@
+{
+  "name": "Café Komorebi",
+  "nameJa": "カフェ こもれび",
+  "concept": "木漏れ日のように穏やかなひとときを。厳選した豆で淹れるこだわりのコーヒーと、季節の食材を使った手作りスイーツをお楽しみください。",
+  "address": "〒150-0001 東京都渋谷区神宮前3-15-8 こもれびビル1F",
+  "phone": "03-1234-5678",
+  "businessHours": {
+    "open": "10:00",
+    "close": "19:00",
+    "lastOrder": "18:30"
+  },
+  "access": {
+    "nearestStation": "東京メトロ 表参道駅 A2出口より徒歩5分",
+    "bus": "都営バス「神宮前三丁目」停留所より徒歩2分",
+    "parking": "専用駐車場はございません。近隣のコインパーキングをご利用ください。"
+  },
+  "sns": {
+    "instagram": "https://instagram.com/cafe_komorebi",
+    "twitter": "https://twitter.com/cafe_komorebi"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm --no-turbopack)",
+      "Bash(where node:*)",
+      "Bash(where npm:*)",
+      "Bash(where npx:*)",
+      "Bash(export PATH=\"$PATH:/c/Program Files/nodejs:/c/Users/ryuut/AppData/Roaming/npm\")",
+      "Bash(npm --version)",
+      "Bash(npm install:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where npm.cmd)",
+      "Read(//c/Program Files/nodejs/**)",
+      "Bash(pip install:*)",
+      "Bash(python create_plan.py)",
+      "Bash(python \"C:\\\\Users\\\\ryuut\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\315bab33-fafa-4a06-9300-0147d29e4a51\\\\51b8580c-613a-40e1-a82f-5e31d4aed08b\\\\skills\\\\xlsx\\\\scripts\\\\recalc.py\" \"C:\\\\Users\\\\ryuut\\\\OneDrive\\\\デスクトップ\\\\Web開発\\\\demo_webpage_20260315\\\\カフェHP_リリース運用計画書.xlsx\")",
+      "Bash(python -c \":*)"
+    ]
+  }
+}

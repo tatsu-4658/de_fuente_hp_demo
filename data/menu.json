@@ -1,0 +1,109 @@
+{
+  "categories": [
+    {
+      "id": "drinks",
+      "name": "ドリンク",
+      "order": 1,
+      "items": [
+        {
+          "id": "d1",
+          "name": "こもれびブレンド",
+          "price": 550,
+          "description": "当店オリジナルブレンド。やわらかな口当たりと豊かな香りが特徴です。",
+          "image": null
+        },
+        {
+          "id": "d2",
+          "name": "カフェラテ",
+          "price": 600,
+          "description": "エスプレッソにスチームミルクをたっぷりと。",
+          "image": null
+        },
+        {
+          "id": "d3",
+          "name": "抹茶ラテ",
+          "price": 650,
+          "description": "京都産宇治抹茶を使用した贅沢な一杯。",
+          "image": null
+        },
+        {
+          "id": "d4",
+          "name": "季節のフルーツティー",
+          "price": 700,
+          "description": "旬のフルーツをたっぷり使ったオリジナルティー。",
+          "image": null
+        },
+        {
+          "id": "d5",
+          "name": "自家製レモネード",
+          "price": 550,
+          "description": "国産レモンを使用。はちみつのやさしい甘さ。",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "food",
+      "name": "フード",
+      "order": 2,
+      "items": [
+        {
+          "id": "f1",
+          "name": "BLTサンドイッチ",
+          "price": 850,
+          "description": "自家製パンにベーコン、レタス、トマトをサンド。",
+          "image": null
+        },
+        {
+          "id": "f2",
+          "name": "本日のキッシュ",
+          "price": 780,
+          "description": "日替わりの具材で焼き上げるキッシュ。サラダ付き。",
+          "image": null
+        },
+        {
+          "id": "f3",
+          "name": "グラノーラボウル",
+          "price": 750,
+          "description": "自家製グラノーラにヨーグルトと季節のフルーツ。",
+          "image": null
+        },
+        {
+          "id": "f4",
+          "name": "トーストセット",
+          "price": 600,
+          "description": "厚切りトーストにバターとジャム。ドリンク付き。",
+          "image": null
+        }
+      ]
+    },
+    {
+      "id": "desserts",
+      "name": "デザート",
+      "order": 3,
+      "items": [
+        {
+          "id": "s1",
+          "name": "ベイクドチーズケーキ",
+          "price": 550,
+          "description": "濃厚でしっとりとした自家製チーズケーキ。",
+          "image": null
+        },
+        {
+          "id": "s2",
+          "name": "ティラミス",
+          "price": 600,
+          "description": "エスプレッソが香る大人のティラミス。",
+          "image": null
+        },
+        {
+          "id": "s3",
+          "name": "季節のタルト",
+          "price": 650,
+          "description": "旬のフルーツを使った手作りタルト。",
+          "image": null
+        }
+      ]
+    }
+  ]
+}
