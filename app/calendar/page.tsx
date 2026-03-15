@@ -5,8 +5,8 @@ import CalendarView from "@/components/CalendarView";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "営業日カレンダー | café de fuente",
-  description: "café de fuenteの営業日カレンダー。",
+  title: "営業日カレンダー | Cafe Komorebi",
+  description: "Cafe Komorebiの営業日カレンダー。",
 };
 
 export default async function CalendarPage() {

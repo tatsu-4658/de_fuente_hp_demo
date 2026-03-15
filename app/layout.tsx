@@ -4,9 +4,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "café de fuente | カフェ デ フェンテ",
-  description: "泉のように湧き出る安らぎの時間を。こだわりの自家焙煎コーヒーと手作りスイーツで、心やすらぐひとときをお過ごしください。",
-  keywords: "カフェ,デフェンテ,コーヒー,スイーツ",
+  title: "Cafe Komorebi | カフェ こもれび",
+  description: "木漏れ日のようなやさしい時間を。こだわりの自家焙煎コーヒーと手作りスイーツで、心やすらぐひとときをお過ごしください。",
+  keywords: "カフェ,こもれび,コーヒー,スイーツ",
 };
 
 export default function RootLayout({
@@ -27,8 +27,8 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "CafeOrCoffeeShop",
-              name: "café de fuente",
-              alternateName: "カフェ デ フェンテ",
+              name: "Cafe Komorebi",
+              alternateName: "カフェ こもれび",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "△△1-2-3 サンプルビル1F",

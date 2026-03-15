@@ -4,8 +4,8 @@ import { getShopInfoData } from "@/lib/data";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "アクセス | café de fuente",
-  description: "café de fuente（カフェ デ フェンテ）へのアクセス方法。",
+  title: "アクセス | Cafe Komorebi",
+  description: "Cafe Komorebi（カフェ こもれび）へのアクセス方法。",
 };
 
 interface ShopInfo {
@@ -35,7 +35,7 @@ export default async function AccessPage() {
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title="café de fuenteの地図"
+            title="Cafe Komorebiの地図"
           />
         </div>
 

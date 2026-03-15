@@ -4,8 +4,8 @@ import { getMenuData, getWeeklyMenuData } from "@/lib/data";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "メニュー | café de fuente",
-  description: "café de fuenteのメニュー一覧。こだわりのドリンク、フード、デザートをご覧ください。",
+  title: "メニュー | Cafe Komorebi",
+  description: "Cafe Komorebiのメニュー一覧。こだわりのドリンク、フード、デザートをご覧ください。",
 };
 
 interface WeeklyMenuItem {
