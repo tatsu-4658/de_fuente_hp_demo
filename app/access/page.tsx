@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import shopInfo from "@/data/shop-info.json";
 
 export const metadata: Metadata = {
-  title: "アクセス | Café Komorebi",
-  description: "Café Komorebiへのアクセス方法。東京メトロ表参道駅より徒歩5分。",
+  title: "アクセス | café de fuente",
+  description: "café de fuente（カフェ デ フェンテ）へのアクセス方法。",
 };
 
 export default function AccessPage() {
@@ -24,7 +24,7 @@ export default function AccessPage() {
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title="Café Komorebiの地図"
+            title="café de fuenteの地図"
           />
         </div>
 

@@ -3,8 +3,8 @@ import menuData from "@/data/menu.json";
 import weeklyMenuData from "@/data/weekly-menu.json";
 
 export const metadata: Metadata = {
-  title: "メニュー | Café Komorebi",
-  description: "Café Komorebiのメニュー一覧。こだわりのドリンク、フード、デザートをご覧ください。",
+  title: "メニュー | café de fuente",
+  description: "café de fuenteのメニュー一覧。こだわりのドリンク、フード、デザートをご覧ください。",
 };
 
 function getActiveWeeklyMenu() {

@@ -4,9 +4,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Café Komorebi | カフェ こもれび",
-  description: "木漏れ日のように穏やかなひとときを。厳選した豆で淹れるこだわりのコーヒーと、季節の食材を使った手作りスイーツをお楽しみください。東京・表参道のカフェ。",
-  keywords: "カフェ,こもれび,表参道,コーヒー,スイーツ",
+  title: "café de fuente | カフェ デ フェンテ",
+  description: "泉のように湧き出る安らぎの時間を。こだわりの自家焙煎コーヒーと手作りスイーツで、心やすらぐひとときをお過ごしください。",
+  keywords: "カフェ,デフェンテ,コーヒー,スイーツ",
 };
 
 export default function RootLayout({
@@ -27,18 +27,18 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "CafeOrCoffeeShop",
-              name: "Café Komorebi",
-              alternateName: "カフェ こもれび",
+              name: "café de fuente",
+              alternateName: "カフェ デ フェンテ",
               address: {
                 "@type": "PostalAddress",
-                streetAddress: "神宮前3-15-8 こもれびビル1F",
-                addressLocality: "渋谷区",
+                streetAddress: "△△1-2-3 サンプルビル1F",
+                addressLocality: "○○区",
                 addressRegion: "東京都",
-                postalCode: "150-0001",
+                postalCode: "000-0000",
                 addressCountry: "JP",
               },
-              telephone: "03-1234-5678",
-              openingHours: "Mo-Fr 10:00-19:00",
+              telephone: "00-0000-0000",
+              openingHours: "Mo-Fr 10:00-18:00",
               servesCuisine: "コーヒー, スイーツ, 軽食",
             }),
           }}

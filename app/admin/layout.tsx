@@ -35,7 +35,7 @@ export default function AdminLayout({
       {/* Sidebar */}
       <aside className="w-56 bg-cafe-brown-dark text-white flex-shrink-0 hidden md:block">
         <div className="p-4 border-b border-cafe-brown">
-          <h2 className="font-bold text-sm">Café Komorebi</h2>
+          <h2 className="font-bold text-sm">café de fuente</h2>
           <p className="text-xs text-cafe-accent-light">管理画面</p>
         </div>
         <nav className="py-2">
