@@ -1,12 +1,23 @@
 import type { Metadata } from "next";
-import shopInfo from "@/data/shop-info.json";
+import { getShopInfoData } from "@/lib/data";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "アクセス | café de fuente",
   description: "café de fuente（カフェ デ フェンテ）へのアクセス方法。",
 };
 
-export default function AccessPage() {
+interface ShopInfo {
+  address: string;
+  phone: string;
+  businessHours: { open: string; close: string; lastOrder: string };
+  access: { nearestStation: string; bus: string; parking: string };
+}
+
+export default async function AccessPage() {
+  const shopInfo = (await getShopInfoData()) as unknown as ShopInfo;
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
       <h1 className="text-2xl md:text-3xl font-bold text-cafe-brown mb-8">

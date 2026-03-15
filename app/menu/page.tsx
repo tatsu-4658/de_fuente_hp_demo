@@ -1,22 +1,48 @@
 import type { Metadata } from "next";
-import menuData from "@/data/menu.json";
-import weeklyMenuData from "@/data/weekly-menu.json";
+import { getMenuData, getWeeklyMenuData } from "@/lib/data";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "メニュー | café de fuente",
   description: "café de fuenteのメニュー一覧。こだわりのドリンク、フード、デザートをご覧ください。",
 };
 
-function getActiveWeeklyMenu() {
-  const today = new Date().toISOString().split("T")[0];
-  return weeklyMenuData.items.filter(
-    (item) => item.startDate <= today && item.endDate >= today
-  );
+interface WeeklyMenuItem {
+  id: string;
+  name: string;
+  price: number;
+  description: string | null;
+  startDate: string;
+  endDate: string;
 }
 
-export default function MenuPage() {
-  const weeklyItems = getActiveWeeklyMenu();
-  const categories = [...menuData.categories].sort((a, b) => a.order - b.order);
+interface MenuItem {
+  id: string;
+  name: string;
+  price: number;
+  description: string | null;
+  image: string | null;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  order: number;
+  items: MenuItem[];
+}
+
+export default async function MenuPage() {
+  const [menuData, weeklyMenuData] = await Promise.all([
+    getMenuData(),
+    getWeeklyMenuData(),
+  ]);
+
+  const today = new Date().toISOString().split("T")[0];
+  const weeklyItems = (weeklyMenuData.items as WeeklyMenuItem[]).filter(
+    (item) => item.startDate <= today && item.endDate >= today
+  );
+  const categories = [...(menuData.categories as Category[])].sort((a, b) => a.order - b.order);
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">

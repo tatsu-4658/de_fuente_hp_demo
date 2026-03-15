@@ -1,15 +1,44 @@
 import Link from "next/link";
-import shopInfo from "@/data/shop-info.json";
-import newsData from "@/data/news.json";
-import weeklyMenuData from "@/data/weekly-menu.json";
-import calendarData from "@/data/calendar.json";
+import { getShopInfoData, getNewsData, getWeeklyMenuData, getCalendarData } from "@/lib/data";
 
-function isOpen(): { open: boolean; message: string } {
+export const dynamic = "force-dynamic";
+
+interface ShopInfo {
+  name: string;
+  nameJa: string;
+  concept: string;
+  businessHours: { open: string; close: string; lastOrder: string };
+}
+
+interface NewsItem {
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+  published: boolean;
+}
+
+interface WeeklyMenuItem {
+  id: string;
+  name: string;
+  price: number;
+  description: string | null;
+  startDate: string;
+  endDate: string;
+}
+
+interface CalendarData {
+  businessHours: { open: string; close: string };
+  regularHolidays: number[];
+  overrides: Record<string, string>;
+}
+
+function computeStatus(calendarData: CalendarData) {
   const now = new Date();
   const day = now.getDay();
   const dateStr = now.toISOString().split("T")[0];
 
-  const override = calendarData.overrides[dateStr as keyof typeof calendarData.overrides];
+  const override = calendarData.overrides[dateStr];
   if (override === "closed") return { open: false, message: "本日は臨時休業です" };
   if (override === "open") return { open: true, message: `本日は営業中（${calendarData.businessHours.open}〜${calendarData.businessHours.close}）` };
 
@@ -19,17 +48,20 @@ function isOpen(): { open: boolean; message: string } {
   return { open: true, message: `本日は営業中（${calendarData.businessHours.open}〜${calendarData.businessHours.close}）` };
 }
 
-function getActiveWeeklyMenu() {
+export default async function HomePage() {
+  const [shopInfo, newsData, weeklyMenuData, calendarData] = await Promise.all([
+    getShopInfoData() as unknown as Promise<ShopInfo>,
+    getNewsData(),
+    getWeeklyMenuData(),
+    getCalendarData(),
+  ]);
+
+  const status = computeStatus(calendarData as CalendarData);
   const today = new Date().toISOString().split("T")[0];
-  return weeklyMenuData.items.filter(
+  const weeklyItems = (weeklyMenuData.items as WeeklyMenuItem[]).filter(
     (item) => item.startDate <= today && item.endDate >= today
   );
-}
-
-export default function HomePage() {
-  const status = isOpen();
-  const weeklyItems = getActiveWeeklyMenu();
-  const publishedNews = newsData.items
+  const publishedNews = (newsData.items as NewsItem[])
     .filter((n) => n.published)
     .sort((a, b) => b.date.localeCompare(a.date));
 

@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readJsonFile, writeJsonFile } from "@/lib/data";
+import { readJsonFile, writeJsonFile, getNewsData } from "@/lib/data";
 import { isAuthenticated } from "@/lib/auth";
+import {
+  isDbAvailable,
+  dbGetNews,
+  dbAddNewsItem,
+  dbUpdateNewsItem,
+  dbDeleteNewsItem,
+} from "@/lib/db";
 
 interface NewsItem {
   id: string;
@@ -15,7 +22,7 @@ interface NewsData {
 }
 
 export async function GET() {
-  const data = await readJsonFile<NewsData>("news.json");
+  const data = await getNewsData();
   return NextResponse.json(data);
 }
 
@@ -25,17 +32,25 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json();
-  const data = await readJsonFile<NewsData>("news.json");
 
-  const newItem: NewsItem = {
+  if (isDbAvailable()) {
+    await dbAddNewsItem(
+      body.title,
+      body.content,
+      body.date || new Date().toISOString().split("T")[0],
+      body.published ?? true,
+    );
+    return NextResponse.json(await dbGetNews());
+  }
+
+  const data = await readJsonFile<NewsData>("news.json");
+  data.items.push({
     id: `n_${Date.now()}`,
     title: body.title,
     content: body.content,
     date: body.date || new Date().toISOString().split("T")[0],
     published: body.published ?? true,
-  };
-  data.items.push(newItem);
-
+  });
   await writeJsonFile("news.json", data);
   return NextResponse.json(data);
 }
@@ -46,8 +61,18 @@ export async function PUT(request: NextRequest) {
   }
 
   const body = await request.json();
-  const data = await readJsonFile<NewsData>("news.json");
 
+  if (isDbAvailable()) {
+    await dbUpdateNewsItem(body.id, {
+      title: body.title,
+      content: body.content,
+      date: body.date,
+      published: body.published,
+    });
+    return NextResponse.json(await dbGetNews());
+  }
+
+  const data = await readJsonFile<NewsData>("news.json");
   const item = data.items.find((i) => i.id === body.id);
   if (item) {
     item.title = body.title ?? item.title;
@@ -55,7 +80,6 @@ export async function PUT(request: NextRequest) {
     item.date = body.date ?? item.date;
     item.published = body.published !== undefined ? body.published : item.published;
   }
-
   await writeJsonFile("news.json", data);
   return NextResponse.json(data);
 }
@@ -67,9 +91,14 @@ export async function DELETE(request: NextRequest) {
 
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
+
+  if (isDbAvailable()) {
+    await dbDeleteNewsItem(id!);
+    return NextResponse.json(await dbGetNews());
+  }
+
   const data = await readJsonFile<NewsData>("news.json");
   data.items = data.items.filter((i) => i.id !== id);
-
   await writeJsonFile("news.json", data);
   return NextResponse.json(data);
 }

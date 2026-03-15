@@ -1,6 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readJsonFile, writeJsonFile } from "@/lib/data";
+import { readJsonFile, writeJsonFile, getMenuData } from "@/lib/data";
 import { isAuthenticated } from "@/lib/auth";
+import {
+  isDbAvailable,
+  dbGetMenu,
+  dbAddCategory,
+  dbUpdateCategory,
+  dbDeleteCategory,
+  dbAddMenuItem,
+  dbUpdateMenuItem,
+  dbDeleteMenuItem,
+} from "@/lib/db";
 
 interface MenuItem {
   id: string;
@@ -22,7 +32,7 @@ interface MenuData {
 }
 
 export async function GET() {
-  const data = await readJsonFile<MenuData>("menu.json");
+  const data = await getMenuData();
   return NextResponse.json(data);
 }
 
@@ -32,31 +42,35 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json();
-  const data = await readJsonFile<MenuData>("menu.json");
 
+  if (isDbAvailable()) {
+    if (body.type === "category") {
+      await dbAddCategory(body.name);
+    } else {
+      await dbAddMenuItem(body.categoryId, body.name, body.price, body.description || null, body.image || null);
+    }
+    return NextResponse.json(await dbGetMenu());
+  }
+
+  const data = await readJsonFile<MenuData>("menu.json");
   if (body.type === "category") {
-    const newCategory: Category = {
+    data.categories.push({
       id: `cat_${Date.now()}`,
       name: body.name,
       order: data.categories.length + 1,
       items: [],
-    };
-    data.categories.push(newCategory);
+    });
   } else {
     const category = data.categories.find((c) => c.id === body.categoryId);
-    if (!category) {
-      return NextResponse.json({ error: "Category not found" }, { status: 404 });
-    }
-    const newItem: MenuItem = {
+    if (!category) return NextResponse.json({ error: "Category not found" }, { status: 404 });
+    category.items.push({
       id: `item_${Date.now()}`,
       name: body.name,
       price: body.price,
       description: body.description || null,
       image: body.image || null,
-    };
-    category.items.push(newItem);
+    });
   }
-
   await writeJsonFile("menu.json", data);
   return NextResponse.json(data);
 }
@@ -67,8 +81,17 @@ export async function PUT(request: NextRequest) {
   }
 
   const body = await request.json();
-  const data = await readJsonFile<MenuData>("menu.json");
 
+  if (isDbAvailable()) {
+    if (body.type === "category") {
+      await dbUpdateCategory(body.id, body.name, body.order);
+    } else {
+      await dbUpdateMenuItem(body.id, body.name, body.price, body.description, body.image);
+    }
+    return NextResponse.json(await dbGetMenu());
+  }
+
+  const data = await readJsonFile<MenuData>("menu.json");
   if (body.type === "category") {
     const category = data.categories.find((c) => c.id === body.id);
     if (category) {
@@ -87,7 +110,6 @@ export async function PUT(request: NextRequest) {
       }
     }
   }
-
   await writeJsonFile("menu.json", data);
   return NextResponse.json(data);
 }
@@ -100,8 +122,17 @@ export async function DELETE(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
   const type = searchParams.get("type");
-  const data = await readJsonFile<MenuData>("menu.json");
 
+  if (isDbAvailable()) {
+    if (type === "category") {
+      await dbDeleteCategory(id!);
+    } else {
+      await dbDeleteMenuItem(id!);
+    }
+    return NextResponse.json(await dbGetMenu());
+  }
+
+  const data = await readJsonFile<MenuData>("menu.json");
   if (type === "category") {
     data.categories = data.categories.filter((c) => c.id !== id);
   } else {
@@ -109,7 +140,6 @@ export async function DELETE(request: NextRequest) {
       cat.items = cat.items.filter((i) => i.id !== id);
     }
   }
-
   await writeJsonFile("menu.json", data);
   return NextResponse.json(data);
 }

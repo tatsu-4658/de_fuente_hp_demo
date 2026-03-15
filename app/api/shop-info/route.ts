@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readJsonFile, writeJsonFile } from "@/lib/data";
+import { getShopInfoData, updateShopInfoData } from "@/lib/data";
 import { isAuthenticated } from "@/lib/auth";
 
 export async function GET() {
-  const data = await readJsonFile("shop-info.json");
+  const data = await getShopInfoData();
   return NextResponse.json(data);
 }
 
@@ -13,9 +13,6 @@ export async function PUT(request: NextRequest) {
   }
 
   const body = await request.json();
-  const data = await readJsonFile<Record<string, unknown>>("shop-info.json");
-
-  const updated = { ...data, ...body };
-  await writeJsonFile("shop-info.json", updated);
+  const updated = await updateShopInfoData(body);
   return NextResponse.json(updated);
 }
